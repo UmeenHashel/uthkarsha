@@ -10,32 +10,34 @@
 
 <body>
     <div class="container">
+
         <div class="profile-header">
             <img src="img/avatar.jpg" alt="User Avatar" class="avatar">
-            <h1 id="username">John Doe</h1>
-            <p id="email">john.doe@example.com</p>
+            <h1 id="username"><?php echo $users['username']; ?></h1>
+            <p id="email"><?php echo $users['email']; ?></p>
         </div>
         <div class="profile-details">
             <h2>Profile Details</h2>
             <div class="detail">
-                <span class="label">Full Name:</span>
-                <span class="value" id="fullName">Johnathan Doe</span>
+                <span class="label">First Name:</span>
+                <span class="value" id="first_name"><?php echo $user['first_name']; ?></span>
+            </div>
+            <div class="detail">
+                <span class="label">Last Name:</span>
+                <span class="value" id="Last_name"><?php echo $user['Last_name']; ?></span>
             </div>
             <div class="detail">
                 <span class="label">Email:</span>
-                <span class="value" id="userEmail">john.doe@example.com</span>
+                <span class="value" id="email"><?php echo $user['email']; ?></span>
+                <div class="detail">
+                    <span class="label">Phone:</span>
+                    <span class="value" id="phone"><?php echo $user['phone']; ?></span>
+                </div></span>
             </div>
-            <div class="detail">
-                <span class="label">Phone:</span>
-                <span class="value" id="phone">+1234567890</span>
-            </div>
+
             <div class="detail">
                 <span class="label">Address:</span>
-                <span class="value" id="address">123 Main St, Springfield</span>
-            </div>
-            <div class="detail">
-                <span class="label">Member Since:</span>
-                <span class="value" id="memberSince">January 2020</span>
+                <span class="value" id="address"><?php echo $user['address']; ?></span>
             </div>
         </div>
     </div>
