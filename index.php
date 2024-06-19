@@ -58,7 +58,7 @@
                         <li><a href="#">Home</a></li>
                         <li><a href="#">Shop</a></li>
                         <li><a href="#">Blog</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="column connect">
