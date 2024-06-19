@@ -13,6 +13,7 @@
         <?php include 'navbar.php'; ?>
     </header>
     <main>
+        <h1>All clothing items available</h1> 
         <div class="product-list">
             <?php
             include 'connect.php';
