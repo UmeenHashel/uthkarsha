@@ -130,7 +130,8 @@ footer .column ul li a {
 }
 
 footer .column ul li a:hover {
-  color: #fff;
+  color: #ff6347;
+  text-decoration: underline;
 }
 
 footer .copyright {

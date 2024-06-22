@@ -40,7 +40,6 @@
         <div class="column">
           <h2>INFORMATION</h2>
           <ul>
-            <li><a href="#">Help</a></li>
             <li><a href="terms_conditions.php">Terms & Conditions</a></li>
             <li><a href="privacy_policy">Privary Policy</a></li>
           </ul>
