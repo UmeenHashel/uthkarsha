@@ -14,7 +14,7 @@
             </div>
             <div class="navbar-links">
                 <ul>
-                    <li><a href="home.php">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="product_display.php">Products</a></li>
                     <li><a href="cart.php">Cart</a></li>
                     <li><a href="login.php">Login</a></li>
