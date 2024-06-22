@@ -59,18 +59,19 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.hero-text button {
+.hero-text a.shop-now-button {
+  display: inline-block;
   background-color: #333;
   color: #fff;
   padding: 10px 20px;
-  border: none;
+  text-decoration: none;
   cursor: pointer;
   font-size: 18px;
   font-family: 'Roboto', sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.hero-text button:hover {
+.hero-text a.shop-now-button:hover {
   background-color: #ff6347;
   color: #fff;
 }
@@ -83,7 +84,7 @@ footer {
 }
 
 footer .container1 {
-  width: 95%;
+  width: 90%;
   margin: 0 auto;
   max-width: 1200px;
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New In: Spring/Summer 2018</title>
+  <title>Uthkarsha Clothing Store: 2024 Collection</title>
   <link rel="stylesheet" href="css/index.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -15,7 +15,7 @@
       <div class="hero-text">
         <h1><span class="typing-text">CATCH YOUR OWN</span></h1>
         <h2>STYLISH & LOOK</h2>
-        <button>SHOP NOW</button>
+        <a href="product_display.php" class="shop-now-button">SHOP NOW</a>
       </div>
     </div>
   </header>
@@ -32,17 +32,17 @@
         <div class="column">
           <h2>Account</h2>
           <ul>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Cart</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a href="login.php">Login</a></li>
+            <li><a href="cart.php">Cart</a></li>
+            <li><a href="contact_us.php">Contact Us</a></li>
           </ul>
         </div>
         <div class="column">
           <h2>INFORMATION</h2>
           <ul>
             <li><a href="#">Help</a></li>
-            <li><a href="#">Terms & Conditions</a></li>
-            <li><a href="#">Privary Policy</a></li>
+            <li><a href="terms_conditions.php">Terms & Conditions</a></li>
+            <li><a href="privacy_policy">Privary Policy</a></li>
           </ul>
         </div>
       </div>
