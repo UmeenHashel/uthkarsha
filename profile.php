@@ -1,23 +1,5 @@
-<?php
-include 'connect.php';
-
-$user_id = 2; // You can change this to fetch different user or get it dynamically
-
-$sql = "SELECT * FROM users WHERE user_id = $user_id";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    // output data of each row
-    $user = $result->fetch_assoc();
-} else {
-    echo "No results found";
-}
-$conn->close();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +25,7 @@ $conn->close();
             </div>
             <div class="detail">
                 <span class="label">Last Name:</span>
-                <span class="value" id="last_name"><?php echo $user['last_name']; ?></span>
+                <span class="value" id="Last_name"><?php echo $user['Last_name']; ?></span>
             </div>
             <div class="detail">
                 <span class="label">Email:</span>

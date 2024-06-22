@@ -10,26 +10,13 @@
 
 <body>
     <header>
-
+        <?php include 'navbar.php'; ?>
     </header>
     <main>
+        <h1>All clothing items available</h1> 
         <div class="product-list">
             <?php
-            // Replace with your database connection details
-            $servername = "localhost";
-            $username = "username";
-            $password = "password";
-            $dbname = "your_database";
-
-            // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
-            // SQL query to fetch products from database
+            include 'connect.php';
             $sql = "SELECT * FROM products";
             $result = $conn->query($sql);
 
@@ -37,11 +24,11 @@
                 // Output data of each row
                 while($row = $result->fetch_assoc()) {
                     echo '<div class="product-item">';
-                    echo '<img src="' . $row['image_path'] . '" alt="' . $row['name'] . '">';
+                    echo '<img src="' . $row['image_url'] . '" alt="' . $row['name'] . '">';
                     echo '<div class="product-info">';
                     echo '<h2>' . $row['name'] . '</h2>';
-                    echo '<p class="price">$' . $row['price'] . '</p>';
-                    echo '<a href="product_details.php?id=' . $row['id'] . '" class="btn">View Details</a>';
+                    echo '<p class="price">Rs.' . $row['price'] . '</p>';
+                    echo '<a href="product_details.php?id=' . $row['product_id'] . '" class="btn">View Details</a>';
                     echo '</div>';
                     echo '</div>';
                 }
