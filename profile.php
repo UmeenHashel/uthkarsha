@@ -1,3 +1,20 @@
+<?php
+include 'connect.php';
+
+$user_id = 2; // You can change this to fetch different user or get it dynamically
+
+$sql = "SELECT * FROM users WHERE user_id = $user_id";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    $user = $result->fetch_assoc();
+} else {
+    echo "No results found";
+}
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,9 +30,11 @@
 
         <div class="profile-header">
             <img src="img/avatar.jpg" alt="User Avatar" class="avatar">
-            <h1 id="username"><?php echo $users['username']; ?></h1>
-            <p id="email"><?php echo $users['email']; ?></p>
+            <h1 id="username"><?php echo $user['username']; ?></h1>
+            <p id="email"><?php echo $user['email']; ?></p>
         </div>
+
+
         <div class="profile-details">
             <h2>Profile Details</h2>
             <div class="detail">
@@ -24,7 +43,7 @@
             </div>
             <div class="detail">
                 <span class="label">Last Name:</span>
-                <span class="value" id="Last_name"><?php echo $user['Last_name']; ?></span>
+                <span class="value" id="last_name"><?php echo $user['last_name']; ?></span>
             </div>
             <div class="detail">
                 <span class="label">Email:</span>
@@ -51,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fullName: "Johnathan Doe",
         phone: "+1234567890",
         address: "123 Main St, Springfield",
-        memberSince: "January 2020"
+
     };
 
     document.getElementById('username').innerText = userProfile.username;
@@ -60,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('userEmail').innerText = userProfile.email;
     document.getElementById('phone').innerText = userProfile.phone;
     document.getElementById('address').innerText = userProfile.address;
-    document.getElementById('memberSince').innerText = userProfile.memberSince;
+
 });
 </script>
 
