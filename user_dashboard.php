@@ -26,18 +26,13 @@
             <div class="card">
                 <h2><a href="profile.php">Profile</a></h2>
                 <p>View and edit your profile details.</p>
+
             </div>
             <div class="card">
-                <h2>Orders</h2>
+                <a href="order_history.php">
+                    <h2>Orders</h2>
+                </a>
                 <p>Check your recent orders and status.</p>
-            </div>
-            <div class="card">
-                <h2>Messages</h2>
-                <p>View your messages and notifications.</p>
-            </div>
-            <div class="card">
-                <h2>Settings</h2>
-                <p>Manage your account settings and preferences.</p>
             </div>
         </div>
     </div>
