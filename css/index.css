@@ -49,7 +49,7 @@ body {
 
 @keyframes blink-caret {
   from, to { border-color: transparent; }
-  50% { border-color: orange; }
+  50% { border-color: #ff6347;; }
 }
 
 .hero-text h2 {
