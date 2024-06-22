@@ -22,20 +22,22 @@
   <footer>
     <div class="container1">
       <div class="row">
-        <div class="column about">
+        <div class="column">
+          <h1>Don't be afraid to play with colors and patterns</h1>
+        </div>
+        <div class="column">
           <h2>About Us</h2>
           <p>Welcome to UTHKARSHA CLOTHING STORE! As a leading fashion retailer, we offer high-quality apparel and exceptional service. Our mission is to make fashion accessible to everyone, with a wide range of styles to suit all tastes. Thank you for choosing us as your fashion destination. We look forward to serving you!</p>
         </div>
-        <div class="column links">
+        <div class="column">
           <h2>Account</h2>
           <ul>
             <li><a href="#">Login</a></li>
             <li><a href="#">Cart</a></li>
-            <li><a href="#">Blog</a></li>
             <li><a href="#">Contact Us</a></li>
           </ul>
         </div>
-        <div class="column connect">
+        <div class="column">
           <h2>INFORMATION</h2>
           <ul>
             <li><a href="#">Help</a></li>
