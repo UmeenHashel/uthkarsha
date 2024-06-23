@@ -1,58 +1,56 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+/* Basic reset */
+* {
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    box-sizing: border-box;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+/* Container for the profile */
 .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
     background-color: #fff;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: 400px;
-    max-width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Profile header styling */
 .profile-header {
     text-align: center;
-    padding: 30px 20px;
-    background-color: #007BFF;
-    color: #fff;
+    margin-bottom: 20px;
 }
 
 .profile-header .avatar {
-    border-radius: 50%;
     width: 100px;
     height: 100px;
-    object-fit: cover;
-    margin-bottom: 10px;
+    border-radius: 50%;
 }
 
-.profile-details {
-    padding: 20px;
-}
-
+/* Profile details styling */
 .profile-details h2 {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+    text-align: center;
     margin-bottom: 20px;
 }
 
 .detail {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
 }
 
 .detail .label {
     font-weight: bold;
+    color: #333;
 }
 
 .detail .value {
-    color: #555;
+    color: #666;
 }
