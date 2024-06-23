@@ -6,23 +6,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT admin_id, username FROM admin WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $username, $password);
+    $stmt_admin = $conn->prepare("SELECT admin_id, username FROM admin WHERE username = ? AND password = ?");
+    $stmt_admin->bind_param("ss", $username, $password);
+    $stmt_admin->execute();
+    $stmt_admin->store_result();
 
-    $stmt->execute();
+    $stmt_user = $conn->prepare("SELECT user_id, username FROM users WHERE username = ? AND password = ?");
+    $stmt_user->bind_param("ss", $username, $password);
+    $stmt_user->execute();
+    $stmt_user->store_result();
 
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
+    if ($stmt_admin->num_rows > 0) {
         $_SESSION["loggedin"] = true;
         $_SESSION["username"] = $username;
+        $_SESSION["usertype"] = "admin";
 
         header("location: admin_dashboard.php");
+    } elseif ($stmt_user->num_rows > 0) {
+        $_SESSION["loggedin"] = true;
+        $_SESSION["username"] = $username;
+        $_SESSION["usertype"] = "user";
+
+        header("location: user_dashboard.php");
     } else {
         echo "The username or password you entered is incorrect.";
     }
 
-    $stmt->close();
+    $stmt_admin->close();
+    $stmt_user->close();
 }
 
 $conn->close();
