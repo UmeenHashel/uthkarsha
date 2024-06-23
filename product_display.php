@@ -13,7 +13,7 @@
         <?php include 'navbar.php'; ?>
     </header>
     <main>
-        <h1>All clothing items available</h1> 
+        <h1>All clothing items available</h1>
         <div class="product-list">
             <?php
             include 'connect.php';
@@ -21,7 +21,6 @@
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
-                // Output data of each row
                 while($row = $result->fetch_assoc()) {
                     echo '<div class="product-item">';
                     echo '<img src="' . $row['image_url'] . '" alt="' . $row['name'] . '">';
@@ -29,6 +28,12 @@
                     echo '<h2>' . $row['name'] . '</h2>';
                     echo '<p class="price">Rs.' . $row['price'] . '</p>';
                     echo '<a href="product_details.php?id=' . $row['product_id'] . '" class="btn">View Details</a>';
+                    
+                    echo '<form action="add_to_cart.php" method="POST">';
+                    echo '<input type="hidden" name="product_id" value="' . $row['product_id'] . '">';
+                    echo '<button type="submit" class="btn">Add To Cart</button>';
+                    echo '</form>';
+                    
                     echo '</div>';
                     echo '</div>';
                 }
