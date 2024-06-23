@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New In: Spring/Summer 2018</title>
+  <title>Uthkarsha Clothing Store: 2024 Collection</title>
   <link rel="stylesheet" href="css/index.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -15,33 +15,33 @@
       <div class="hero-text">
         <h1><span class="typing-text">CATCH YOUR OWN</span></h1>
         <h2>STYLISH & LOOK</h2>
-        <button>SHOP NOW</button>
+        <a href="product_display.php" class="shop-now-button">SHOP NOW</a>
       </div>
     </div>
   </header>
   <footer>
     <div class="container1">
       <div class="row">
-        <div class="column about">
-          <h2>About Us</h2>
-          <p>Welcome to UTHKARSHA CLOTHING STORE! As a leading fashion retailer, we offer high-quality apparel and exceptional service. Our mission is to make fashion accessible to everyone, with a wide range of styles to suit all tastes. We believe in fashion's power to express individuality and confidence, curating collections that blend the latest trends with timeless classics. Thank you for choosing us as your fashion destination. We look forward to serving you!</p>
+        <div class="column">
+          <h1>Don't be afraid to play with colors and patterns</h1>
         </div>
-        <div class="column links">
-          <h2>Quick Links</h2>
+        <div class="column">
+          <h2>About Us</h2>
+          <p>Welcome to UTHKARSHA CLOTHING STORE! As a leading fashion retailer, we offer high-quality apparel and exceptional service. Our mission is to make fashion accessible to everyone, with a wide range of styles to suit all tastes. Thank you for choosing us as your fashion destination. We look forward to serving you!</p>
+        </div>
+        <div class="column">
+          <h2>Account</h2>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Shop</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a href="login.php">Login</a></li>
+            <li><a href="cart.php">Cart</a></li>
+            <li><a href="contact_us.php">Contact Us</a></li>
           </ul>
         </div>
-        <div class="column connect">
-          <h2>Connect with Us</h2>
+        <div class="column">
+          <h2>INFORMATION</h2>
           <ul>
-            <li><a href="#">Instagram</a></li>
-            <li><a href="#">Facebook</a></li>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="#">Pinterest</a></li>
+            <li><a href="terms_conditions.php">Terms & Conditions</a></li>
+            <li><a href="privacy_policy">Privary Policy</a></li>
           </ul>
         </div>
       </div>
