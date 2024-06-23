@@ -1,35 +1,28 @@
 <?php
 // Check if product ID is provided in the URL
-if (!isset($_GET['id'])) {
+if (!isset($_GET['product_id'])) {
     // Redirect to product display page if ID is not provided
     header("Location: product_display.php");
     exit();
 }
 
-// Replace with your database connection details
-$servername = "localhost";
-$username = "username";
-$password = "password";
-$dbname = "your_database";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'connect.php';
 
 // Initialize variables to store product details
 $product_name = "";
 $product_description = "";
 $product_price = 0;
 $product_image = "";
+$product_category = "";
+$product_stock = 0;
 
 // Prepare SQL statement to fetch product details based on ID
-$product_id = $_GET['id'];
-$sql = "SELECT * FROM products WHERE id = $product_id";
-$result = $conn->query($sql);
+$product_id = intval($_GET['product_id']); // Ensure product_id is an integer
+$sql = "SELECT * FROM products WHERE product_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $product_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     // Fetch product details
@@ -37,13 +30,16 @@ if ($result->num_rows > 0) {
     $product_name = $row['name'];
     $product_description = $row['description'];
     $product_price = $row['price'];
-    $product_image = $row['image_path'];
+    $product_image = $row['image_url'];
+    $product_category = $row['category'];
+    $product_stock = $row['stock'];
 } else {
     // Redirect to product display page if product not found
     header("Location: product_display.php");
     exit();
 }
 
+$stmt->close();
 $conn->close();
 ?>
 
@@ -53,7 +49,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $product_name; ?> - Product Details</title>
+    <title><?php echo htmlspecialchars($product_name); ?> - Product Details</title>
     <link rel="stylesheet" href="css/product_display.css">
     <style>
     /* Additional styles specific to product_detail.php */
@@ -113,14 +109,18 @@ $conn->close();
 </head>
 
 <body>
-
+    <header>
+        <?php include 'navbar.php'; ?>
+    </header>
     <main>
         <div class="product-details">
-            <img src="<?php echo $product_image; ?>" alt="<?php echo $product_name; ?> Image">
+            <img src="<?php echo htmlspecialchars($product_image); ?>" alt="<?php echo htmlspecialchars($product_name); ?> Image">
             <div class="product-info">
-                <h2><?php echo $product_name; ?></h2>
-                <p class="price">$<?php echo $product_price; ?></p>
-                <p><?php echo $product_description; ?></p>
+                <h2><?php echo htmlspecialchars($product_name); ?></h2>
+                <p class="price">Rs.<?php echo htmlspecialchars($product_price); ?></p>
+                <p><?php echo nl2br(htmlspecialchars($product_description)); ?></p>
+                <p><strong>Category:</strong> <?php echo htmlspecialchars($product_category); ?></p>
+                <p><strong>Stock:</strong> <?php echo htmlspecialchars($product_stock); ?></p>
                 <a href="#" class="add-to-cart-btn">Add to Cart</a>
             </div>
         </div>
