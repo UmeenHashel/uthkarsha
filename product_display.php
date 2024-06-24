@@ -20,6 +20,7 @@ $result = $conn->query($sql);
         <?php include 'navbar.php'; ?>
     </header>
     <main>
+        <h1>All Products Available</h1>
         <div class="product-list">
             <?php
             if ($result->num_rows > 0) {
@@ -28,7 +29,7 @@ $result = $conn->query($sql);
                     echo '<img src="'.$row["image_url"].'" alt="'.$row["name"].'">';
                     echo '<div class="product-info">';
                     echo '<h2>'.$row["name"].'</h2>';
-                    echo '<p class="price">$'.$row["price"].'</p>';
+                    echo '<p class="price">Rs. '.$row["price"].'</p>';
                     echo '<a href="product_details.php?id='.$row["product_id"].'" class="btn">View Details</a>';
                     echo '<a href="add_to_cart.php?id='.$row["product_id"].'" class="btn">Add to Cart</a>';
                     echo '</div>';
