@@ -2,10 +2,15 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
+    padding: 0;
+}
+
+.login-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: calc(100vh - 70px); /* Adjust based on your navbar height */
+    margin-top: 70px; /* Adjust based on your navbar height */
 }
 
 .login-container {
@@ -65,4 +70,9 @@ p a {
 
 p a:hover {
     text-decoration: underline;
+}
+
+.error {
+    color: red;
+    margin-bottom: 15px;
 }
