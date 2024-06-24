@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
             <img src="<?php echo $product['image_url']; ?>" alt="<?php echo $product['name']; ?>">
             <div class="product-info">
                 <h1><?php echo $product['name']; ?></h1>
-                <p class="price">$<?php echo $product['price']; ?></p>
+                <p class="price">Rs. <?php echo $product['price']; ?></p>
                 <p class="description"><?php echo $product['description']; ?></p>
                 <p class="category">Category: <?php echo ucfirst($product['category']); ?></p>
                 <p class="stock">Stock: <?php echo $product['stock']; ?></p>
