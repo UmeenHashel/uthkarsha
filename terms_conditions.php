@@ -37,6 +37,9 @@ $conn->close();
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
         }
+        .terms-card h1 {
+            margin-top: 0;
+        }
     </style>
 </head>
 <body>
@@ -44,8 +47,8 @@ $conn->close();
         <?php include 'navbar.php'; ?>
     </header>
     <div class="terms-container">
-        <h1>Terms and Conditions</h1>
         <div class="terms-card">
+            <h1>Terms and Conditions</h1>
             <p><?php echo nl2br(htmlspecialchars($terms)); ?></p>
         </div>
     </div>
