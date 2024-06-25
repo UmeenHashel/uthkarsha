@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar">
             <div class="navbar-brand">
-                <a href="#">UTHKARSHA CLOTHING STORE</a>
+                <a href="index.php">UTHKARSHA CLOTHING STORE</a>
             </div>
             <div class="navbar-links">
                 <ul>
