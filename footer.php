@@ -4,7 +4,15 @@
   <div class="container1">
     <div class="row">
       <div class="column">
-        <h1>Don't be afraid to play with colors and patterns</h1>
+      <h1>Don't be afraid to play with <span class="colors"><br>
+        <span class="color1">c</span>
+        <span class="color2">o</span>
+        <span class="color3">l</span>
+        <span class="color4">o</span>
+        <span class="color5">r</span>
+        <span class="color6">s</span>
+        </span> and <span class="patterns">patterns</span>
+    </h1>
       </div>
       <div class="column">
         <h2>About Us</h2>
