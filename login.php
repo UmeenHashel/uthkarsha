@@ -86,5 +86,6 @@ $conn->close();
             <p>Don't have an account? <a href="register.php">Register</a></p>
         </div>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
 </html>
