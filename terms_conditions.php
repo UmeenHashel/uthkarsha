@@ -51,6 +51,8 @@ $conn->close();
             <p><?php echo nl2br(htmlspecialchars($terms)); ?></p>
         </div>
     </div>
-    <?php include 'footer.php'; ?>
+    <footer>
+        <?php include 'footer.php'; ?>
+    </footer>
 </body>
 </html>

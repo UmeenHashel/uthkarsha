@@ -45,7 +45,9 @@ if (isset($_GET['id'])) {
             </div>
         </div>
     </main>
-    <?php include 'footer.php'; ?>
+    <<footer>
+        <?php include 'footer.php'; ?>
+    </footer>
 </body>
 </html>
 
