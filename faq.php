@@ -1,7 +1,6 @@
 <?php
 include 'connect.php';
 
-// Fetch all FAQs
 $sql = "SELECT question, answer FROM faqs";
 $result = $conn->query($sql);
 
@@ -23,8 +22,8 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ</title>
-    <link rel="stylesheet" href="css/navbar.css"> <!-- Assuming the navbar.css is in a css folder -->
-    <link rel="stylesheet" href="css/faq.css"> <!-- Include the faq.css here -->
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/faq.css">
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             var acc = document.getElementsByClassName("accordion");
@@ -61,6 +60,8 @@ $conn->close();
             <?php endif; ?>
         </div>
     </main>
-    <?php include 'footer.php'; ?>
+    <footer>
+        <?php include 'footer.php'; ?>
+    </footer>
 </body>
 </html>
