@@ -1,0 +1,118 @@
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+}
+
+.color1 {
+  color: red;
+}
+.color2 {
+  color: orange;
+}
+.color3 {
+  color: yellow;
+}
+.color4 {
+  color: green;
+}
+.color5 {
+  color: rgb(0, 217, 255);
+}
+.color6 {
+  color: rgb(247, 50, 92);
+}
+
+.patterns {
+  font-family: "Lucida Handwriting", cursive;
+  background: linear-gradient(
+    45deg,
+    #ff6347,
+    #ffcc00,
+    #1e90ff,
+    #32cd32,
+    #ff69b4,
+    #8a2be2
+  );
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+footer .container1 {
+  width: 90%;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+footer .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+footer .column {
+  flex: 1;
+  padding: 20px;
+  min-width: 250px;
+}
+
+footer .column h1 {
+  color: #ff6347;
+}
+
+footer .column h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #ff6347;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+footer .column p {
+  font-size: 1em;
+  line-height: 1.6;
+}
+
+footer .column ul {
+  list-style: none;
+  padding: 0;
+}
+
+footer .column ul li {
+  margin-bottom: 10px;
+}
+
+footer .column ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+footer .column ul li a:hover {
+  color: #ff6347;
+  text-decoration: underline;
+}
+
+footer .copyright {
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #444;
+  margin-top: 20px;
+  font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+  footer .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  footer .column {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  footer .column h2 {
+    border-bottom: none;
+  }
+}
