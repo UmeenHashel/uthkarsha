@@ -16,7 +16,9 @@
       </div>
       <div class="column">
         <h2>About Us</h2>
-            <p>Welcome to UTHKARSHA CLOTHING STORE! We offer high-quality apparel and exceptional service. Our mission is to make fashion accessible to everyone with a wide range of styles. Thank you for choosing us as your fashion destination!</p>
+            <p>Welcome to UTHKARSHA CLOTHING STORE! We offer high-quality apparel and exceptional service. Our mission 
+              is to make fashion accessible to everyone with a wide range of styles. Thank you for choosing us as your 
+              fashion destination!</p>
       </div>
       <div class="column">
         <h2>Account</h2>

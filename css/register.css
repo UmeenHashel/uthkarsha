@@ -3,14 +3,21 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    flex-shrink: 0;
 }
 
 .register-page {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 70px); /* Adjust based on your navbar height */
-    margin-top: 70px; /* Adjust based on your navbar height */
+    padding: 20px;
 }
 
 .register-container {
@@ -71,4 +78,30 @@ p a {
 
 p a:hover {
     text-decoration: underline;
+}
+
+.message {
+    color: #d9534f; /* Red color for error messages */
+    padding: 10px;
+    background-color: #f2dede; /* Light red background for error messages */
+    border: 1px solid #ebccd1;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.message.success {
+    color: #3c763d; /* Green color for success messages */
+    background-color: #dff0d8; /* Light green background for success messages */
+    border: 1px solid #d6e9c6;
+}
+
+footer {
+    flex-shrink: 0;
+    background-color: #f1f1f1;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    bottom: 0;
 }

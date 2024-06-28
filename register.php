@@ -15,9 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssssss", $username, $email, $password, $first_name, $last_name, $phone, $address);
 
     if ($stmt->execute()) {
-        echo "Registration successful!";
+        $success_message = "Registration successful!";
     } else {
-        echo "Error: " . $stmt->error;
+        $error_message = "Error: " . $stmt->error;
     }
 
     $stmt->close();
@@ -41,7 +41,15 @@ $conn->close();
     </header>
     <div class="register-page">
         <div class="register-container">
-            <h2>User Registeration</h2>
+            <h2>User Registration</h2>
+            <?php 
+            if (isset($success_message)) {
+                echo '<p class="message success">' . $success_message . '</p>';
+            }
+            if (isset($error_message)) {
+                echo '<p class="message error">' . $error_message . '</p>';
+            }
+            ?>
             <form action="register.php" method="post">
                 <div class="form-group">
                     <label for="username">Username:</label>
@@ -76,5 +84,8 @@ $conn->close();
             <p>Already have an account? <a href="login.php">Login</a></p>
         </div>
     </div>
+    <footer>
+        <?php include 'footer.php'; ?>
+    </footer>
 </body>
 </html>
