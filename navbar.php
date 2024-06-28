@@ -25,9 +25,18 @@
                     <li><a href="privacy_policy.php">Privacy Policy</a></li>
                     <li><a href="faq.php">FAQs</a></li>
                     <li><a href="about_contact.php">About Us</a></li>
+                    <li><a href="logout.php" id="logout-link">Logout</a></li>
                 </ul>
             </div>
         </nav>
+        <script>
+        document.getElementById('logout-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to log out?')) {
+                window.location.href = 'index.php';
+            }
+        });
+        </script>
     </header>
 </body>
 
