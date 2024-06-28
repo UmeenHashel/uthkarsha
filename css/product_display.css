@@ -62,3 +62,8 @@ main {
 .product-info .btn:hover {
     background-color: #0056b3;
 }
+.success {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
