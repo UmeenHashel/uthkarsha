@@ -1,7 +1,6 @@
 <?php
 include 'connect.php';
 
-// Fetch all terms and conditions
 $sql = "SELECT content FROM terms_conditions";
 $result = $conn->query($sql);
 
@@ -52,5 +51,6 @@ $conn->close();
             <p><?php echo nl2br(htmlspecialchars($terms)); ?></p>
         </div>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
 </html>

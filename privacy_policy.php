@@ -35,5 +35,6 @@ $conn->close();
             <p><?php echo nl2br(htmlspecialchars($policy)); ?></p>
         </div>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
 </html>
