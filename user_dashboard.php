@@ -9,34 +9,30 @@
 </head>
 
 <body>
-    <div class="nav_profile">
+    <header>
         <?php include 'navbar.php'; ?>
-    </div>
-    <break>
-        <div class="content">
-            <h1 id="welcome">Welcome, User!</h1>
+    </header>
+    <div class="content">
+        <h1 id="welcome">Welcome, User!</h1>
             <div class="cards">
                 <div class="card">
-                    <h2><a href="profile.php">Profile</a></h2>
-                    <p>View and edit your profile details.</p>
-
+                    <h2>Profile</h2>
+                    <?php include 'profile.php'; ?>
                 </div>
                 <div class="card">
-                    <a href="order_history.php">
-                        <h2>Orders</h2>
-                    </a>
-                    <p>Check your recent orders and status.</p>
+                    <h2>Orders</h2>
+                    <?php include 'order_history.php'; ?>
                 </div>
             </div>
-        </div>
+    </div>
 
-        <script>
+        <!-- <script>
         // JavaScript to update the welcome message
         document.addEventListener('DOMContentLoaded', function() {
             const userName = userName; // You can replace this with dynamic data
             document.getElementById('welcome').innerText = `Welcome, ${userName}!`;
         });
-        </script>
+        </script> -->
 </body>
 
 </html>
