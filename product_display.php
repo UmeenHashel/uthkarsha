@@ -8,19 +8,41 @@ $result = $conn->query($sql);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Display</title>
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/product_display.css">
+    <script>
+    function showAlert(message) {
+        alert(message);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+        const message = urlParams.get('message');
+
+        if (status === 'error' && message) {
+            showAlert(message);
+        }
+    });
+    </script>
 </head>
+
 <body>
     <header>
         <?php include 'navbar.php'; ?>
     </header>
     <main>
         <h1>All Products Available</h1>
+        <?php
+        if (isset($_GET['status']) && $_GET['status'] == 'success') {
+            echo '<p class="success">Product added to cart successfully!</p>';
+        }
+        ?>
         <div class="product-list">
             <?php
             if ($result->num_rows > 0) {
@@ -31,7 +53,7 @@ $result = $conn->query($sql);
                     echo '<h2>'.$row["name"].'</h2>';
                     echo '<p class="price">Rs. '.$row["price"].'</p>';
                     echo '<a href="product_details.php?id='.$row["product_id"].'" class="btn">View Details</a>';
-                    echo '<a href="cart.php?id='.$row["product_id"].'" class="btn">Add to Cart</a>';
+                    echo '<a href="add_to_cart.php?id='.$row["product_id"].'" class="btn">Add to Cart</a>';
                     echo '</div>';
                     echo '</div>';
                 }
@@ -43,4 +65,5 @@ $result = $conn->query($sql);
         </div>
     </main>
 </body>
+
 </html>
