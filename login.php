@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 session_start();
 include 'connect.php'; 
 
@@ -29,9 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["loggedin"] = true;
             $_SESSION["username"] = $admin_username;
             $_SESSION["usertype"] = "admin";
-            $_SESSION["user_id"] = $admin_id;  // Set the user_id in the session
             header("location: admin_dashboard.php");
-            exit();
         } else {
             $login_error = "The username or password you entered is incorrect.";
         }
@@ -41,9 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["loggedin"] = true;
             $_SESSION["username"] = $user_username;
             $_SESSION["usertype"] = "user";
-            $_SESSION["user_id"] = $user_id;  // Set the user_id in the session
             header("location: user_dashboard.php");
-            exit();
         } else {
             $login_error = "The username or password you entered is incorrect.";
         }
@@ -60,7 +53,6 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,7 +60,6 @@ $conn->close();
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/login.css">
 </head>
-
 <body>
     <header>
         <?php include 'navbar.php'; ?>
@@ -97,5 +88,4 @@ $conn->close();
     </div>
     <?php include 'footer.php'; ?>
 </body>
-
 </html>

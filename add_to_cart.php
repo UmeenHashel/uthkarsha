@@ -1,52 +1,32 @@
 <?php
 session_start();
-include 'connect.php'; 
+include 'connect.php';
 
+// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: product_display.php?status=error&message=User not logged in.");
+    // Redirect to login page if not logged in
+    header("Location: login.php");
     exit();
 }
 
-if (isset($_GET['id'])) {
-    $product_id = $_GET['id'];
-    $user_id = $_SESSION['user_id'];
-    
-    // Check if the item is already in the cart
-    $stmt = $conn->prepare("SELECT quantity FROM cart_items WHERE user_id = ? AND product_id = ?");
-    $stmt->bind_param("ii", $user_id, $product_id);
-    $stmt->execute();
-    $stmt->store_result();
+$user_id = $_SESSION['user_id'];
+$product_id = $_POST['product_id'];
+$quantity = 1; // Default quantity
 
-    if ($stmt->num_rows > 0) {
-        // Item is already in the cart, update the quantity
-        $stmt->bind_result($quantity);
-        $stmt->fetch();
-        $quantity++;
-        $stmt->close();
+// Insert into cart_items table
+$sql = "INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)";
 
-        $stmt = $conn->prepare("UPDATE cart_items SET quantity = ? WHERE user_id = ? AND product_id = ?");
-        $stmt->bind_param("iii", $quantity, $user_id, $product_id);
-    } else {
-        // Item is not in the cart, insert a new record
-        $quantity = 1;
-        $stmt->close();
-
-        $stmt = $conn->prepare("INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)");
-        $stmt->bind_param("iii", $user_id, $product_id, $quantity);
-    }
-    
+if ($stmt = $conn->prepare($sql)) {
+    $stmt->bind_param("iii", $user_id, $product_id, $quantity);
     if ($stmt->execute()) {
-        header("Location: product_display.php?status=success&product=".$product_id);
-        exit();
+        // Redirect to cart page or show a success message
+        header("Location: cart.php");
     } else {
-        header("Location: product_display.php?status=error&message=Error adding to cart: " . $conn->error);
-        exit();
+        echo "Error: " . $stmt->error;
     }
-    
     $stmt->close();
 } else {
-    header("Location: product_display.php?status=error&message=Product ID not provided.");
-    exit();
+    echo "Error: " . $conn->error;
 }
 
 $conn->close();
