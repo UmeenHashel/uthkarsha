@@ -2,10 +2,12 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-session_start();
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 include 'connect.php';
 
-// Check if user_id is set in the session
 if (!isset($_SESSION['user_id'])) {
     echo '<script>
             alert("User not logged in.");
@@ -16,7 +18,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch user data from the database
 $sql = "SELECT * FROM users WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);

@@ -1,3 +1,49 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+include 'connect.php';
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("location: login.php");
+    exit;
+}
+
+$user_id = $_SESSION["user_id"];
+
+$sql = "SELECT o.order_id, o.order_date, o.total, oi.quantity, oi.price, p.name 
+        FROM orders o
+        JOIN order_items oi ON o.order_id = oi.order_id
+        JOIN products p ON oi.product_id = p.product_id
+        WHERE o.user_id = ?";
+
+if ($stmt = $conn->prepare($sql)) {
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    $orders = [];
+    while ($row = $result->fetch_assoc()) {
+        $order_id = $row['order_id'];
+        if (!isset($orders[$order_id])) {
+            $orders[$order_id] = [
+                'order_id' => $order_id,
+                'order_date' => $row['order_date'],
+                'total' => $row['total'],
+                'items' => []
+            ];
+        }
+        $orders[$order_id]['items'][] = [
+            'name' => $row['name'],
+            'quantity' => $row['quantity'],
+            'price' => $row['price']
+        ];
+    }
+    $stmt->close();
+}
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +63,7 @@
             <div class="order-header">
                 <span><strong>Order ID:</strong> <?php echo $order['order_id']; ?></span>
                 <span><strong>Date:</strong> <?php echo $order['order_date']; ?></span>
-                <span><strong>Total:</strong> $<?php echo $order['total_amount']; ?></span>
+                <span><strong>Total:</strong> Rs.<?php echo $order['total']; ?></span>
             </div>
             <div class="order-items">
                 <table>
@@ -32,10 +78,10 @@
                     <tbody>
                         <?php foreach ($order['items'] as $item): ?>
                         <tr>
-                            <td><?php echo $item['product_name']; ?></td>
+                            <td><?php echo $item['name']; ?></td>
                             <td><?php echo $item['quantity']; ?></td>
-                            <td>$<?php echo $item['price']; ?></td>
-                            <td>$<?php echo $item['quantity'] * $item['price']; ?></td>
+                            <td>Rs.<?php echo $item['price']; ?></td>
+                            <td>Rs.<?php echo $item['quantity'] * $item['price']; ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
