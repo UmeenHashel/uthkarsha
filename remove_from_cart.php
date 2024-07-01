@@ -3,14 +3,13 @@ session_start();
 include 'connect.php';
 
 // Check if the user is logged in
-/*if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) {
     echo 'error';
     exit();
 }
 
 $user_id = $_SESSION['user_id'];
-*/
-$user_id = 2;
+
 $product_id = $_GET['product_id'];
 
 // Delete the item from the cart_items table
