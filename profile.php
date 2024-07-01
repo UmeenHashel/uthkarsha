@@ -1,13 +1,3 @@
-<?php
-session_start();
-include 'connect.php';
-
-// Assuming you store the user ID in the session
-/*
-$user_id = $_SESSION['user_id'];
-*/
-$user_id = 2;
-// Fetch user data from the database
 $sql = "SELECT * FROM users WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
