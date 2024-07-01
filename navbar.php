@@ -20,7 +20,7 @@
                     <li><a href="product_display.php">Products</a></li>
                     <li><a href="cart.php">Cart</a></li>
                     <li><a href="login.php">Login</a></li>
-                    <li><a href="profile.php">Profile</a></li>
+                    <li><a href="user_dashboard.php">Profile</a></li>
                     <li><a href="terms_conditions.php">Terms and Conditions</a></li>
                     <li><a href="privacy_policy.php">Privacy Policy</a></li>
                     <li><a href="faq.php">FAQs</a></li>
