@@ -249,41 +249,96 @@ function calculateTotal($cartItems) {
     </div>
 
     <script>
-    // JavaScript to handle quantity adjustment and removal of items
     document.addEventListener('DOMContentLoaded', function() {
-                const quantityButtons = document.querySelectorAll('.quantity-btn');
-                const totalAmountElement = document.querySelector('.total strong');
+        const quantityButtons = document.querySelectorAll('.quantity-btn');
+        const totalAmountElement = document.querySelector('.total strong');
+        const checkoutButton = document.querySelector('.checkout-btn');
 
-                // Function to update quantity on server and in UI
-                function updateQuantity(productId, newQuantity) {
-                    fetch(`update_quantity.php?product_id=${productId}&quantity=${newQuantity}`, {
-                        method: 'GET'
-                    }).then(response => response.text()).then(data => {
-                        if (data === 'success') {
-                            // Update quantity in the UI
-                            const inputToUpdate = document.querySelector(
-                                `.quantity-input[data-product-id="${productId}"]`);
-                            inputToUpdate.value = newQuantity;
-                            // Recalculate total amount
-                            recalculateTotal();
-                        } else {
-                            alert('Failed to update quantity');
-                        }
-                    });
+        // Function to update quantity on server and in UI
+        function updateQuantity(productId, newQuantity) {
+            fetch(`update_quantity.php?product_id=${productId}&quantity=${newQuantity}`, {
+                method: 'GET'
+            }).then(response => response.text()).then(data => {
+                if (data === 'success') {
+                    // Update quantity in the UI
+                    const inputToUpdate = document.querySelector(
+                        `.quantity-input[data-product-id="${productId}"]`);
+                    inputToUpdate.value = newQuantity;
+                    // Recalculate total amount
+                    recalculateTotal();
+                } else {
+                    alert('Failed to update quantity');
+                }
+            });
+        }
+
+        // Function to recalculate total amount
+        function recalculateTotal() {
+            fetch('fetch_cart_items.php')
+                .then(response => response.json())
+                .then(data => {
+                    const totalAmount = data.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+                    totalAmountElement.textContent = 'Total amount: Rs.' + totalAmount.toFixed(2);
+                });
+        }
+
+        // Attach event listeners to quantity buttons
+        quantityButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const action = this.getAttribute('data-action');
+                const productId = this.getAttribute('data-product-id');
+                const inputElement = document.querySelector(
+                    `.quantity-input[data-product-id="${productId}"]`);
+                let currentQuantity = parseInt(inputElement.value);
+
+                if (action === 'increase' && currentQuantity < 99) {
+                    currentQuantity++;
+                } else if (action === 'decrease' && currentQuantity > 1) {
+                    currentQuantity--;
                 }
 
-                // Function to recalculate total amount
-                function recalculateTotal() {
-                    fetch('fetch_cart_items.php')
-                        .then(response => response.json())
-                        .then(data => {
-                            const totalAmount = data.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-                            totalAmountElement.textContent = 'Total amount: Rs.' + totalAmount.toFixed(2);
-                        });
-                }
+                updateQuantity(productId, currentQuantity);
+            });
+        });
 
-                // Attach event listeners to quantity buttons
-                quantityButtons.forEach(button => {
-                            button.addEventListener('click', function() {
-                                        const action = this.getAttribute('data-action');
-                                        const product
+        // Attach event listeners to remove buttons
+        const removeButtons = document.querySelectorAll('.remove-btn');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                fetch(`remove_from_cart.php?product_id=${productId}`, {
+                    method: 'GET'
+                }).then(response => response.text()).then(data => {
+                    if (data === 'success') {
+                        // Remove the item from the UI
+                        const itemElement = this.closest('.item');
+                        itemElement.remove();
+                        // Recalculate total amount
+                        recalculateTotal();
+                    } else {
+                        alert('Failed to remove item');
+                    }
+                });
+            });
+        });
+
+        // Attach event listener to checkout button
+        checkoutButton.addEventListener('click', function() {
+            if (confirm('Are you sure you want to checkout?')) {
+                fetch('checkout.php', {
+                    method: 'POST'
+                }).then(response => response.text()).then(data => {
+                    if (data === 'success') {
+                        alert('Order placed successfully!');
+                        window.location.reload(); // Reload the page to update the cart
+                    } else {
+                        alert('Failed to place order');
+                    }
+                });
+            }
+        });
+    });
+    </script>
+</body>
+
+</html>
