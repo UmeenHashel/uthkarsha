@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'connect.php'; 
+include 'connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -24,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_admin->fetch();
         if (password_verify($password, $admin_password)) {
             $_SESSION["loggedin"] = true;
+            $_SESSION["user_id"] = $admin_id;  // Store admin_id in the session
             $_SESSION["username"] = $admin_username;
             $_SESSION["usertype"] = "admin";
             header("location: admin_dashboard.php");
@@ -34,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_user->fetch();
         if (password_verify($password, $user_password)) {
             $_SESSION["loggedin"] = true;
+            $_SESSION["user_id"] = $user_id;  // Store user_id in the session
             $_SESSION["username"] = $user_username;
             $_SESSION["usertype"] = "user";
             header("location: user_dashboard.php");

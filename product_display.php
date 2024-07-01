@@ -8,7 +8,6 @@ $result = $conn->query($sql);
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,7 +30,6 @@ $result = $conn->query($sql);
     });
     </script>
 </head>
-
 <body>
     <header>
         <?php include 'navbar.php'; ?>
@@ -53,7 +51,10 @@ $result = $conn->query($sql);
                     echo '<h2>'.$row["name"].'</h2>';
                     echo '<p class="price">Rs. '.$row["price"].'</p>';
                     echo '<a href="product_details.php?id='.$row["product_id"].'" class="btn">View Details</a>';
-                    echo '<a href="add_to_cart.php?id='.$row["product_id"].'" class="btn">Add to Cart</a>';
+                    echo '<form action="add_to_cart.php" method="post">';
+                    echo '<input type="hidden" name="product_id" value="'.$row["product_id"].'">';
+                    echo '<button type="submit" class="btn">Add to Cart</button>';
+                    echo '</form>';
                     echo '</div>';
                     echo '</div>';
                 }
@@ -65,5 +66,4 @@ $result = $conn->query($sql);
         </div>
     </main>
 </body>
-
 </html>
