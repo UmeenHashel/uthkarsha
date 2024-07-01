@@ -78,12 +78,7 @@ function calculateTotal($cartItems) {
                                 data-product-id="<?= $item['product_id'] ?>">Remove</button>
                         </div>
                     </div>
-<<<<<<< Updated upstream
                     <div class="item-price" id="item-price-<?= $item['product_id'] ?>">Total: Rs.<?= number_format($item['price'] * $item['quantity'], 2) ?></div>
-=======
-                    <div class="item-price" id="item-price-<?= $item['product_id'] ?>">Total:
-                        Rs.<?= number_format($item['price'] * $item['quantity'], 2) ?></div>
->>>>>>> Stashed changes
                 </div>
                 <?php endforeach; ?>
                 <div class="checkout">
@@ -106,25 +101,15 @@ function calculateTotal($cartItems) {
         const quantityButtons = document.querySelectorAll('.quantity-btn');
         const totalAmountElement = document.querySelector('.total strong');
 
-<<<<<<< Updated upstream
        
        // Function to update quantity on server and in UI
-=======
-
-        // Function to update quantity on server and in UI
->>>>>>> Stashed changes
         function updateQuantity(productId, newQuantity) {
             fetch(`update_quantity.php?product_id=${productId}&quantity=${newQuantity}`, {
                 method: 'GET'
             }).then(response => response.text()).then(data => {
                 if (data === 'success') {
                     // Update quantity in the UI
-<<<<<<< Updated upstream
                     const inputToUpdate = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
-=======
-                    const inputToUpdate = document.querySelector(
-                        `.quantity-input[data-product-id="${productId}"]`);
->>>>>>> Stashed changes
                     inputToUpdate.value = newQuantity;
                     // Update item price in the UI
                     const itemPrice = parseFloat(inputToUpdate.getAttribute('data-price'));
@@ -156,12 +141,7 @@ function calculateTotal($cartItems) {
             button.addEventListener('click', function() {
                 const action = this.getAttribute('data-action');
                 const productId = this.getAttribute('data-product-id');
-<<<<<<< Updated upstream
                 const inputElement = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
-=======
-                const inputElement = document.querySelector(
-                    `.quantity-input[data-product-id="${productId}"]`);
->>>>>>> Stashed changes
                 let currentQuantity = parseInt(inputElement.value);
 
                 if (action === 'increase' && currentQuantity < 99) {
@@ -195,11 +175,7 @@ function calculateTotal($cartItems) {
             });
         });
     });
-<<<<<<< Updated upstream
 </script>
-=======
-    </script>
->>>>>>> Stashed changes
 
 </body>
 
