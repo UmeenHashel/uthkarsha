@@ -38,14 +38,12 @@ function calculateTotal($cartItems) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="css/cart.css">
 </head>
-
 <body>
     <div class="navcontact">
         <?php include 'navbar.php'; ?>
@@ -66,16 +64,12 @@ function calculateTotal($cartItems) {
                         <p><strong><?= $item['name'] ?></strong></p>
                         <p>Price: Rs.<?= number_format($item['price'], 2) ?></p>
                         <div class="quantity">
-                            <button class="quantity-btn" data-action="decrease"
-                                data-product-id="<?= $item['product_id'] ?>">-</button>
-                            <input type="number" class="quantity-input" data-product-id="<?= $item['product_id'] ?>"
-                                value="<?= $item['quantity'] ?>" min="1" max="99" readonly>
-                            <button class="quantity-btn" data-action="increase"
-                                data-product-id="<?= $item['product_id'] ?>">+</button>
+                            <button class="quantity-btn" data-action="decrease" data-product-id="<?= $item['product_id'] ?>">-</button>
+                            <input type="number" class="quantity-input" data-product-id="<?= $item['product_id'] ?>" value="<?= $item['quantity'] ?>" min="1" max="99" readonly>
+                            <button class="quantity-btn" data-action="increase" data-product-id="<?= $item['product_id'] ?>">+</button>
                         </div>
                         <div class="actions">
-                            <button type="button" class="remove-btn"
-                                data-product-id="<?= $item['product_id'] ?>">Remove</button>
+                            <button type="button" class="remove-btn" data-product-id="<?= $item['product_id'] ?>">Remove</button>
                         </div>
                     </div>
                     <div class="item-price" id="item-price-<?= $item['product_id'] ?>">Total: Rs.<?= number_format($item['price'] * $item['quantity'], 2) ?></div>
@@ -101,8 +95,7 @@ function calculateTotal($cartItems) {
         const quantityButtons = document.querySelectorAll('.quantity-btn');
         const totalAmountElement = document.querySelector('.total strong');
 
-       
-       // Function to update quantity on server and in UI
+        // Function to update quantity on server and in UI
         function updateQuantity(productId, newQuantity) {
             fetch(`update_quantity.php?product_id=${productId}&quantity=${newQuantity}`, {
                 method: 'GET'
@@ -124,7 +117,6 @@ function calculateTotal($cartItems) {
                 }
             });
         }
-
 
         // Function to recalculate total amount
         function recalculateTotal() {
@@ -178,5 +170,4 @@ function calculateTotal($cartItems) {
 </script>
 
 </body>
-
 </html>
