@@ -1,24 +1,17 @@
 <?php
-// Error reporting
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
 include 'connect.php';
 
-// Check if user_id is set in the session
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     echo '<script>alert("User not logged in.");</script>';
-    exit; // Ensure script stops execution if user is not logged in
+    exit;
 }
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch user data from the database
 $sql = "SELECT * FROM users WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
@@ -34,14 +27,14 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
-    <link rel="stylesheet" href="css/profile.css"> <!-- Ensure this path is correct based on your file structure -->
+    <link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
     <div class="container">
         <div class="profile-header">
             <img src="img/avatar.jpg" alt="User Avatar" class="avatar">
             <h1 id="username"><?php echo htmlspecialchars($user['username'] ?? ''); ?></h1>
-            <p id="email"><?php echo htmlspecialchars($user['email'] ?? ''); ?></p>
+            <p id="user_email"><?php echo htmlspecialchars($user['email'] ?? ''); ?></p>
         </div>
         <div class="profile-details">
             <h2>Profile Details</h2>
@@ -55,7 +48,7 @@ $conn->close();
             </div>
             <div class="detail">
                 <span class="label">Email:</span>
-                <span class="value" id="email"><?php echo htmlspecialchars($user['email'] ?? ''); ?></span>
+                <span class="value" id="user_email"><?php echo htmlspecialchars($user['email'] ?? ''); ?></span>
             </div>
             <div class="detail">
                 <span class="label">Phone:</span>
