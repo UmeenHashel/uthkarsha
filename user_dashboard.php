@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("location: login.php");
+    exit;
+}
+$username = $_SESSION["username"];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,9 +33,8 @@
         </div>
     </div>
         <script>
-            // JavaScript to update the welcome message
             document.addEventListener('DOMContentLoaded', function() {
-                const userName = userName; // You can replace this with dynamic data
+                const userName = userName;
                 document.getElementById('welcome').innerText = `Welcome, ${userName}!`;
             });
         </script>
