@@ -43,159 +43,7 @@ function calculateTotal($cartItems) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
-    <style>
-    /* Additional CSS for cart.php */
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f8f9fa;
-        color: #333;
-        margin: 0;
-        padding: 0;
-    }
-
-    .container {
-        max-width: 1200px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-header {
-        background-color: #f0f0f0;
-        padding: 10px 20px;
-        border-bottom: 1px solid #ddd;
-        margin-bottom: 20px;
-    }
-
-    .card-header h5 {
-        margin: 0;
-        font-size: 1.2rem;
-        font-weight: bold;
-    }
-
-    .card-body {
-        padding: 20px;
-    }
-
-    .item {
-        display: flex;
-        margin-bottom: 20px;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 20px;
-    }
-
-    .item-image {
-        width: 150px;
-        margin-right: 20px;
-        flex-shrink: 0;
-    }
-
-    .item-image img {
-        width: 100%;
-        border-radius: 4px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .item-details {
-        flex-grow: 1;
-    }
-
-    .item-details p {
-        margin-bottom: 8px;
-    }
-
-    .item-price {
-        font-size: 1.2rem;
-        font-weight: bold;
-        text-align: right;
-        flex-shrink: 0;
-    }
-
-    .quantity {
-        display: flex;
-        align-items: center;
-        margin-top: 10px;
-    }
-
-    .quantity input {
-        width: 40px;
-        text-align: center;
-        margin: 0 5px;
-    }
-
-    .quantity-btn {
-        background-color: #04AA6D;
-        border: none;
-        color: white;
-        padding: 5px 7px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-    }
-
-    .actions {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        margin-top: 10px;
-    }
-
-    .actions button {
-        margin-left: 10px;
-        padding: 8px 16px;
-        border: none;
-        background-color: #dc3545;
-        color: #fff;
-        cursor: pointer;
-        border-radius: 4px;
-        transition: background-color 0.3s;
-    }
-
-    .actions button:hover {
-        background-color: #c82333;
-    }
-
-    .checkout {
-        margin-top: 20px;
-        padding-top: 20px;
-        border-top: 1px solid #ddd;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .checkout .total {
-        font-size: 1.2rem;
-        font-weight: bold;
-    }
-
-    .checkout .btn {
-        padding: 10px 20px;
-        border: none;
-        background-color: #007bff;
-        color: #fff;
-        cursor: pointer;
-        border-radius: 4px;
-        transition: background-color 0.3s;
-    }
-
-    .checkout .btn:hover {
-        background-color: #0056b3;
-    }
-
-    .empty-cart {
-        text-align: center;
-        margin-top: 20px;
-        padding: 20px;
-        background-color: #f0f0f0;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-    }
-    </style>
+    <link rel="stylesheet" href="css/cart.css">
 </head>
 
 <body>
@@ -230,7 +78,7 @@ function calculateTotal($cartItems) {
                                 data-product-id="<?= $item['product_id'] ?>">Remove</button>
                         </div>
                     </div>
-                    <div class="item-price">Total: Rs.<?= number_format($item['price'] * $item['quantity'], 2) ?></div>
+                    <div class="item-price" id="item-price-<?= $item['product_id'] ?>">Total: Rs.<?= number_format($item['price'] * $item['quantity'], 2) ?></div>
                 </div>
                 <?php endforeach; ?>
                 <div class="checkout">
@@ -252,25 +100,31 @@ function calculateTotal($cartItems) {
     document.addEventListener('DOMContentLoaded', function() {
         const quantityButtons = document.querySelectorAll('.quantity-btn');
         const totalAmountElement = document.querySelector('.total strong');
-        const checkoutButton = document.querySelector('.checkout-btn');
 
-        // Function to update quantity on server and in UI
+       
+       // Function to update quantity on server and in UI
         function updateQuantity(productId, newQuantity) {
             fetch(`update_quantity.php?product_id=${productId}&quantity=${newQuantity}`, {
                 method: 'GET'
             }).then(response => response.text()).then(data => {
                 if (data === 'success') {
                     // Update quantity in the UI
-                    const inputToUpdate = document.querySelector(
-                        `.quantity-input[data-product-id="${productId}"]`);
+                    const inputToUpdate = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
                     inputToUpdate.value = newQuantity;
-                    // Recalculate total amount
+                    // Update item price in the UI
+                    const itemPrice = parseFloat(inputToUpdate.getAttribute('data-price'));
+                    const itemPriceElement = document.querySelector(`#item-price-${productId}`);
+                    itemPriceElement.textContent = `Total: Rs.${(itemPrice * newQuantity).toFixed(2)}`;
+                    // Recalculate total amount after updating quantity
                     recalculateTotal();
+                    // Reload the page
+                    location.reload();
                 } else {
                     alert('Failed to update quantity');
                 }
             });
         }
+
 
         // Function to recalculate total amount
         function recalculateTotal() {
@@ -287,8 +141,7 @@ function calculateTotal($cartItems) {
             button.addEventListener('click', function() {
                 const action = this.getAttribute('data-action');
                 const productId = this.getAttribute('data-product-id');
-                const inputElement = document.querySelector(
-                    `.quantity-input[data-product-id="${productId}"]`);
+                const inputElement = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
                 let currentQuantity = parseInt(inputElement.value);
 
                 if (action === 'increase' && currentQuantity < 99) {
@@ -313,7 +166,7 @@ function calculateTotal($cartItems) {
                         // Remove the item from the UI
                         const itemElement = this.closest('.item');
                         itemElement.remove();
-                        // Recalculate total amount
+                        // Recalculate total amount after item removal
                         recalculateTotal();
                     } else {
                         alert('Failed to remove item');
@@ -321,24 +174,9 @@ function calculateTotal($cartItems) {
                 });
             });
         });
-
-        // Attach event listener to checkout button
-        checkoutButton.addEventListener('click', function() {
-            if (confirm('Are you sure you want to checkout?')) {
-                fetch('checkout.php', {
-                    method: 'POST'
-                }).then(response => response.text()).then(data => {
-                    if (data === 'success') {
-                        alert('Order placed successfully!');
-                        window.location.reload(); // Reload the page to update the cart
-                    } else {
-                        alert('Failed to place order');
-                    }
-                });
-            }
-        });
     });
-    </script>
+</script>
+
 </body>
 
 </html>
