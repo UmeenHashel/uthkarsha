@@ -38,12 +38,14 @@ function calculateTotal($cartItems) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="css/cart.css">
 </head>
+
 <body>
     <div class="navcontact">
         <?php include 'navbar.php'; ?>
@@ -64,15 +66,21 @@ function calculateTotal($cartItems) {
                         <p><strong><?= $item['name'] ?></strong></p>
                         <p>Price: Rs.<?= number_format($item['price'], 2) ?></p>
                         <div class="quantity">
-                            <button class="quantity-btn" data-action="decrease" data-product-id="<?= $item['product_id'] ?>">-</button>
-                            <input type="number" class="quantity-input" data-product-id="<?= $item['product_id'] ?>" value="<?= $item['quantity'] ?>" min="1" max="99" readonly>
-                            <button class="quantity-btn" data-action="increase" data-product-id="<?= $item['product_id'] ?>">+</button>
+                            <button class="quantity-btn" data-action="decrease"
+                                data-product-id="<?= $item['product_id'] ?>">-</button>
+                            <input type="number" class="quantity-input" data-product-id="<?= $item['product_id'] ?>"
+                                data-price="<?= $item['price'] ?>" value="<?= $item['quantity'] ?>" min="1" max="99"
+                                readonly>
+                            <button class="quantity-btn" data-action="increase"
+                                data-product-id="<?= $item['product_id'] ?>">+</button>
                         </div>
                         <div class="actions">
-                            <button type="button" class="remove-btn" data-product-id="<?= $item['product_id'] ?>">Remove</button>
+                            <button type="button" class="remove-btn"
+                                data-product-id="<?= $item['product_id'] ?>">Remove</button>
                         </div>
                     </div>
-                    <div class="item-price" id="item-price-<?= $item['product_id'] ?>">Total: Rs.<?= number_format($item['price'] * $item['quantity'], 2) ?></div>
+                    <div class="item-price" id="item-price-<?= $item['product_id'] ?>">Total:
+                        Rs.<?= number_format($item['price'] * $item['quantity'], 2) ?></div>
                 </div>
                 <?php endforeach; ?>
                 <div class="checkout">
@@ -94,6 +102,7 @@ function calculateTotal($cartItems) {
     document.addEventListener('DOMContentLoaded', function() {
         const quantityButtons = document.querySelectorAll('.quantity-btn');
         const totalAmountElement = document.querySelector('.total strong');
+        const checkoutButton = document.querySelector('.checkout-btn');
 
         // Function to update quantity on server and in UI
         function updateQuantity(productId, newQuantity) {
@@ -101,17 +110,13 @@ function calculateTotal($cartItems) {
                 method: 'GET'
             }).then(response => response.text()).then(data => {
                 if (data === 'success') {
-                    // Update quantity in the UI
-                    const inputToUpdate = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
+                    const inputToUpdate = document.querySelector(
+                        `.quantity-input[data-product-id="${productId}"]`);
                     inputToUpdate.value = newQuantity;
-                    // Update item price in the UI
                     const itemPrice = parseFloat(inputToUpdate.getAttribute('data-price'));
                     const itemPriceElement = document.querySelector(`#item-price-${productId}`);
                     itemPriceElement.textContent = `Total: Rs.${(itemPrice * newQuantity).toFixed(2)}`;
-                    // Recalculate total amount after updating quantity
                     recalculateTotal();
-                    // Reload the page
-                    location.reload();
                 } else {
                     alert('Failed to update quantity');
                 }
@@ -133,7 +138,8 @@ function calculateTotal($cartItems) {
             button.addEventListener('click', function() {
                 const action = this.getAttribute('data-action');
                 const productId = this.getAttribute('data-product-id');
-                const inputElement = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
+                const inputElement = document.querySelector(
+                    `.quantity-input[data-product-id="${productId}"]`);
                 let currentQuantity = parseInt(inputElement.value);
 
                 if (action === 'increase' && currentQuantity < 99) {
@@ -155,10 +161,8 @@ function calculateTotal($cartItems) {
                     method: 'GET'
                 }).then(response => response.text()).then(data => {
                     if (data === 'success') {
-                        // Remove the item from the UI
                         const itemElement = this.closest('.item');
                         itemElement.remove();
-                        // Recalculate total amount after item removal
                         recalculateTotal();
                     } else {
                         alert('Failed to remove item');
@@ -166,8 +170,23 @@ function calculateTotal($cartItems) {
                 });
             });
         });
+
+        // Handle checkout button click
+        checkoutButton.addEventListener('click', function() {
+            fetch('checkout.php', {
+                method: 'GET'
+            }).then(response => response.text()).then(data => {
+                if (data.startsWith('success')) {
+                    alert('Order placed successfully!');
+                    window.location.href = 'orders.php';
+                } else {
+                    alert('Failed to place order: ' + data);
+                }
+            });
+        });
     });
-</script>
+    </script>
 
 </body>
+
 </html>
