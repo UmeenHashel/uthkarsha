@@ -1,6 +1,10 @@
 <?php
 session_start();
-session_destroy(); // Destroy the session
-header("Location: login.php"); // Redirect to the login page
+// Destroy the session
+if (session_status() == PHP_SESSION_ACTIVE) {
+    session_destroy();
+}
+// Redirect to the login page
+header("Location: login.php");
 exit();
 ?>
