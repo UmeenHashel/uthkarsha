@@ -35,6 +35,7 @@ $conn->close();
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
+            margin: auto auto 250px;
         }
         .terms-card h1 {
             margin-top: 0;
@@ -48,6 +49,7 @@ $conn->close();
     <div class="terms-container">
         <div class="terms-card">
             <h1>Terms and Conditions</h1>
+            <br>
             <p><?php echo nl2br(htmlspecialchars($terms)); ?></p>
         </div>
     </div>
