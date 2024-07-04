@@ -25,11 +25,7 @@
                     <li><a href="privacy_policy.php">Privacy Policy</a></li>
                     <li><a href="faq.php">FAQs</a></li>
                     <li><a href="about_contact.php">About Us</a></li>
-                    <li>
-                        <form action="logout.php" method="post">
-                            <button type="submit">Sign Out</button>
-                        </form>
-                    </li>
+
                 </ul>
             </div>
         </nav>
