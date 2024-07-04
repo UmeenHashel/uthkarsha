@@ -23,12 +23,14 @@ $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link rel="stylesheet" href="css/profile.css">
 </head>
+
 <body>
     <div class="container">
         <div class="profile-header">
@@ -58,7 +60,30 @@ $conn->close();
                 <span class="label">Address:</span>
                 <span class="value" id="address"><?php echo htmlspecialchars($user['address'] ?? ''); ?></span>
             </div>
+            <div class="detail">
+                <form action="logout.php" method="post">
+                    <button type="signout">Sign Out</button>
+                </form>
+            </div>
         </div>
     </div>
+
+    <script>
+    document.getElementById('signout').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default action (signing out)
+
+        // Display a confirmation popup
+        let userConfirmed = confirm("Are you sure you want to sign out?");
+
+        if (userConfirmed) {
+            // If the user confirms, proceed with the sign-out action
+            window.location.href = '/signout'; // Replace with your sign-out URL
+        } else {
+            // If the user cancels, do nothing
+            return false;
+        }
+    });
+    </script>
 </body>
+
 </html>
