@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["user_id"] = $admin_id;  // Store admin_id in the session
             $_SESSION["username"] = $admin_username;
             $_SESSION["usertype"] = "admin";
-            header("location: admin_dashboard.php");
+            header("location: admin/admin_dashboard.php");
         } else {
             $login_error = "The username or password you entered is incorrect.";
         }
