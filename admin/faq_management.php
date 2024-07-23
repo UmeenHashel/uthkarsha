@@ -85,4 +85,6 @@ $faqs = $conn->query("SELECT * FROM faqs");
             <?php } ?>
         </tbody>
     </table>
+</body>
+</html>
 

@@ -13,13 +13,7 @@
             </div>
             <div class="navbar-links">
                 <ul>
-                    <li><a href="user_management.php">User Management</a>
-                        <ul class="dropdown">
-                            <li><a href="administrators.php">Administrators</a></li>
-                            <li><a href="users.php">Users</a></li>
-                            <li><a href="customers.php">Customers</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="user_management.php">User Management</a></li>
                     <li><a href="product_management.php">Product Management</a></li>
                     <li><a href="order_management.php">Order Management</a></li>
                     <li><a href="faq_management.php">FAQ Management</a></li>

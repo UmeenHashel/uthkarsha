@@ -23,6 +23,23 @@ h1 {
     width: 300px;
 }
 
+.product-form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 200px;
+}
+
+.product-form button:hover {
+    background-color: #45a049;
+}
+
+.error-messages p {
+    color: red;
+    text-align: center;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -39,5 +56,6 @@ th, td {
 }
 
 img {
-    max-width: 50px;
+    width: 150px; 
+    height: auto;
 }

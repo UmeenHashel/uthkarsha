@@ -7,17 +7,50 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 
+// Function to validate image
+function validate_image($file) {
+    $errors = [];
+    $allowed_mime_types = ['image/png'];
+    $max_width = 600;
+    $max_height = 600;
+
+    $image_info = getimagesize($file['tmp_name']);
+    if ($image_info === false) {
+        $errors[] = "The file is not a valid image.";
+    } else {
+        if (!in_array($image_info['mime'], $allowed_mime_types)) {
+            $errors[] = "Only PNG images are allowed.";
+        }
+        if ($image_info[0] != $max_width || $image_info[1] != $max_height) {
+            $errors[] = "Image dimensions must be 600x600 pixels.";
+        }
+    }
+
+    return $errors;
+}
+
 // Add product
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_product'])) {
     $name = $_POST['name'];
     $description = $_POST['description'];
     $price = $_POST['price'];
-    $image_url = $_POST['image_url'];
     $category = $_POST['category'];
     $stock = $_POST['stock'];
 
-    $sql = "INSERT INTO products (name, description, price, image_url, category, stock) VALUES ('$name', '$description', '$price', '$image_url', '$category', '$stock')";
-    $conn->query($sql);
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+        $errors = validate_image($_FILES['image']);
+        if (empty($errors)) {
+            $image_path = 'db_images/' . basename($_FILES['image']['name']);
+            if (move_uploaded_file($_FILES['image']['tmp_name'], '../' . $image_path)) {
+                $sql = "INSERT INTO products (name, description, price, image_url, category, stock) VALUES ('$name', '$description', '$price', '$image_path', '$category', '$stock')";
+                $conn->query($sql);
+            } else {
+                $errors[] = "Failed to move uploaded file.";
+            }
+        }
+    } else {
+        $errors[] = "Please upload an image.";
+    }
 }
 
 // Delete product
@@ -33,11 +66,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_product'])) {
     $name = $_POST['name'];
     $description = $_POST['description'];
     $price = $_POST['price'];
-    $image_url = $_POST['image_url'];
     $category = $_POST['category'];
     $stock = $_POST['stock'];
 
-    $sql = "UPDATE products SET name='$name', description='$description', price='$price', image_url='$image_url', category='$category', stock='$stock' WHERE product_id='$product_id'";
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+        $errors = validate_image($_FILES['image']);
+        if (empty($errors)) {
+            $image_path = 'db_images/' . basename($_FILES['image']['name']);
+            if (move_uploaded_file($_FILES['image']['tmp_name'], '../' . $image_path)) {
+                $sql = "UPDATE products SET name='$name', description='$description', price='$price', image_url='$image_path', category='$category', stock='$stock' WHERE product_id='$product_id'";
+            } else {
+                $errors[] = "Failed to move uploaded file.";
+            }
+        }
+    } else {
+        $sql = "UPDATE products SET name='$name', description='$description', price='$price', category='$category', stock='$stock' WHERE product_id='$product_id'";
+    }
     $conn->query($sql);
 }
 
@@ -59,12 +103,12 @@ $products = $conn->query("SELECT * FROM products");
 
     <h1>Product Management</h1>
 
-    <form action="product_management.php" method="POST" class="product-form">
+    <form action="product_management.php" method="POST" enctype="multipart/form-data" class="product-form">
         <input type="hidden" name="product_id" id="product_id">
         <input type="text" name="name" id="name" placeholder="Product Name" required>
         <textarea name="description" id="description" placeholder="Description"></textarea>
         <input type="number" step="0.01" name="price" id="price" placeholder="Price" required>
-        <input type="text" name="image_url" id="image_url" placeholder="Image URL">
+        <input type="file" name="image" id="image" accept="image/png" required>
         <select name="category" id="category" required>
             <option value="men">Men</option>
             <option value="women">Women</option>
@@ -73,6 +117,14 @@ $products = $conn->query("SELECT * FROM products");
         <button type="submit" name="add_product">Add Product</button>
         <button type="submit" name="update_product">Update Product</button>
     </form>
+
+    <?php if (!empty($errors)) { ?>
+        <div class="error-messages">
+            <?php foreach ($errors as $error) { ?>
+                <p><?php echo $error; ?></p>
+            <?php } ?>
+        </div>
+    <?php } ?>
 
     <table>
         <thead>
@@ -94,7 +146,7 @@ $products = $conn->query("SELECT * FROM products");
                 <td><?php echo $product['name']; ?></td>
                 <td><?php echo $product['description']; ?></td>
                 <td><?php echo $product['price']; ?></td>
-                <td><img src="<?php echo $product['image_url']; ?>" alt="<?php echo $product['name']; ?>" width="50"></td>
+                <td><img src="<?php echo '../'.$product['image_url']; ?>" alt="<?php echo $product['name']; ?>"></td>
                 <td><?php echo $product['category']; ?></td>
                 <td><?php echo $product['stock']; ?></td>
                 <td>
