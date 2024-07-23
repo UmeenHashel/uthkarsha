@@ -2,7 +2,6 @@
 session_start();
 include 'connect.php';
 
-// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     echo 'not_logged_in';
     exit();
@@ -10,11 +9,9 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Start a transaction
 $conn->begin_transaction();
 
 try {
-    // Create a new order
     $sql = "INSERT INTO orders (user_id, order_date, status, total) VALUES (?, NOW(), 'Pending', 0)";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
@@ -27,10 +24,9 @@ try {
     $order_id = $stmt->insert_id;
     $stmt->close();
 
-    // Fetch cart items for the logged-in user
-    $sql = "SELECT cart_items.product_id, cart_items.quantity, products.price 
-            FROM cart_items 
-            JOIN products ON cart_items.product_id = products.product_id 
+    $sql = "SELECT cart_items.product_id, cart_items.quantity, products.price
+            FROM cart_items
+            JOIN products ON cart_items.product_id = products.product_id
             WHERE cart_items.user_id = ?";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
@@ -50,7 +46,6 @@ try {
     }
     $stmt->close();
 
-    // Insert cart items into order_items
     $sql = "INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
@@ -65,7 +60,6 @@ try {
     }
     $stmt->close();
 
-    // Update the total in the orders table
     $sql = "UPDATE orders SET total = ? WHERE order_id = ?";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
@@ -77,7 +71,6 @@ try {
     }
     $stmt->close();
 
-    // Clear the cart
     $sql = "DELETE FROM cart_items WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
@@ -89,7 +82,6 @@ try {
     }
     $stmt->close();
 
-    // Commit the transaction
     $conn->commit();
 
     echo 'success';
