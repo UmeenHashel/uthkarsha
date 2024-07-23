@@ -1,5 +1,5 @@
 <?php
-include '../connect.php';  // Adjust the path based on the location of db_connect.php
+include '../connect.php';
 
 session_start();
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
