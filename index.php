@@ -11,7 +11,7 @@
   <header>
     <?php include 'navbar.php'; ?>
     <div class="hero">
-      <img src="db_images/homepage_img.jpg" alt="Hero Image">
+      <img src="img/homepage_img.jpg" alt="Hero Image">
       <div class="hero-text">
         <h1><span class="typing-text">CATCH YOUR OWN</span></h1>
         <h2>STYLISH & LOOK</h2>
