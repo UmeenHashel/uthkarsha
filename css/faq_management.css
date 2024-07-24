@@ -29,10 +29,17 @@ h1 {
     border: none;
     cursor: pointer;
     width: 200px; 
+    text-align: center;
 }
 
 .faq-form button:hover {
     background-color: #45a049;
+}
+
+.error-messages {
+    color: red;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 table {
@@ -49,4 +56,29 @@ th, td {
 
 th {
     background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+button {
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+form[style="display:inline;"] {
+    display: inline;
 }

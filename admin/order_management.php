@@ -7,6 +7,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 // Update order status
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_order'])) {
     $order_id = $_POST['order_id'];

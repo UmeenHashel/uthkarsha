@@ -7,6 +7,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 // Fetch admin and users
 $admin_sql = "SELECT * FROM admin";
 $admin_result = $conn->query($admin_sql);
@@ -14,14 +18,7 @@ $admin_result = $conn->query($admin_sql);
 $user_sql = "SELECT * FROM users";
 $user_result = $conn->query($user_sql);
 
-// Add admin
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_admin'])) {
-    $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-    $sql = "INSERT INTO admin (username, password) VALUES ('$username', '$password')";
-    $conn->query($sql);
-}
+$error = '';
 
 // Add user
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_user'])) {
@@ -33,47 +30,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_user'])) {
     $phone = $_POST['phone'];
     $address = $_POST['address'];
 
-    $sql = "INSERT INTO users (username, email, password, first_name, last_name, phone, address) VALUES ('$username', '$email', '$password', '$first_name', '$last_name', '$phone', '$address')";
-    $conn->query($sql);
-}
+    // Check for existing email
+    $email_check_sql = "SELECT * FROM users WHERE email='$email'";
+    $email_check_result = $conn->query($email_check_sql);
+    if ($email_check_result->num_rows > 0) {
+        $error = "The email is already registered.";
+    }
 
-// Delete admin
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_admin'])) {
-    $admin_id = $_POST['admin_id'];
-    $sql = "DELETE FROM admin WHERE admin_id='$admin_id'";
-    $conn->query($sql);
-}
+    // Check for existing phone number
+    $phone_check_sql = "SELECT * FROM users WHERE phone='$phone'";
+    $phone_check_result = $conn->query($phone_check_sql);
+    if ($phone_check_result->num_rows > 0) {
+        $error = "The phone number is already registered.";
+    }
 
-// Delete user
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_user'])) {
-    $user_id = $_POST['user_id'];
-    $sql = "DELETE FROM users WHERE user_id='$user_id'";
-    $conn->query($sql);
-}
-
-// Update admin
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_admin'])) {
-    $admin_id = $_POST['admin_id'];
-    $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-    $sql = "UPDATE admin SET username='$username', password='$password' WHERE admin_id='$admin_id'";
-    $conn->query($sql);
-}
-
-// Update user
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_user'])) {
-    $user_id = $_POST['user_id'];
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
-
-    $sql = "UPDATE users SET username='$username', email='$email', password='$password', first_name='$first_name', last_name='$last_name', phone='$phone', address='$address' WHERE user_id='$user_id'";
-    $conn->query($sql);
+    // If no errors, insert the user
+    if (empty($error)) {
+        $sql = "INSERT INTO users (username, email, password, first_name, last_name, phone, address) VALUES ('$username', '$email', '$password', '$first_name', '$last_name', '$phone', '$address')";
+        $conn->query($sql);
+    }
 }
 ?>
 
@@ -91,6 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_user'])) {
         <?php include 'admin_navbar.php'; ?>
     </header>
     <main>
+        <?php if ($error): ?>
+        <div class="error-message"><?php echo $error; ?></div>
+        <?php endif; ?>
         <section id="admin-management" class="dashboard-section">
             <h2>Admin Management</h2>
             <form action="user_management.php" method="POST" class="user-form">

@@ -7,6 +7,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 // Function to validate image
 function validate_image($file) {
     $errors = [];
@@ -29,6 +33,8 @@ function validate_image($file) {
     return $errors;
 }
 
+$errors = [];
+
 // Add product
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_product'])) {
     $name = $_POST['name'];
@@ -37,16 +43,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_product'])) {
     $category = $_POST['category'];
     $stock = $_POST['stock'];
 
+    // Check for existing product
+    $product_check_sql = "SELECT * FROM products WHERE name='$name' AND category='$category'";
+    $product_check_result = $conn->query($product_check_sql);
+    if ($product_check_result->num_rows > 0) {
+        $errors[] = "A product with the same name and category already exists.";
+    }
+
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        $errors = validate_image($_FILES['image']);
-        if (empty($errors)) {
+        $image_errors = validate_image($_FILES['image']);
+        if (empty($image_errors)) {
             $image_path = 'db_images/' . basename($_FILES['image']['name']);
             if (move_uploaded_file($_FILES['image']['tmp_name'], '../' . $image_path)) {
-                $sql = "INSERT INTO products (name, description, price, image_url, category, stock) VALUES ('$name', '$description', '$price', '$image_path', '$category', '$stock')";
-                $conn->query($sql);
+                if (empty($errors)) {
+                    $sql = "INSERT INTO products (name, description, price, image_url, category, stock) VALUES ('$name', '$description', '$price', '$image_path', '$category', '$stock')";
+                    $conn->query($sql);
+                }
             } else {
                 $errors[] = "Failed to move uploaded file.";
             }
+        } else {
+            $errors = array_merge($errors, $image_errors);
         }
     } else {
         $errors[] = "Please upload an image.";
@@ -69,20 +86,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_product'])) {
     $category = $_POST['category'];
     $stock = $_POST['stock'];
 
+    // Check for existing product
+    $product_check_sql = "SELECT * FROM products WHERE name='$name' AND category='$category' AND product_id != '$product_id'";
+    $product_check_result = $conn->query($product_check_sql);
+    if ($product_check_result->num_rows > 0) {
+        $errors[] = "A product with the same name and category already exists.";
+    }
+
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        $errors = validate_image($_FILES['image']);
-        if (empty($errors)) {
+        $image_errors = validate_image($_FILES['image']);
+        if (empty($image_errors)) {
             $image_path = 'db_images/' . basename($_FILES['image']['name']);
             if (move_uploaded_file($_FILES['image']['tmp_name'], '../' . $image_path)) {
-                $sql = "UPDATE products SET name='$name', description='$description', price='$price', image_url='$image_path', category='$category', stock='$stock' WHERE product_id='$product_id'";
+                if (empty($errors)) {
+                    $sql = "UPDATE products SET name='$name', description='$description', price='$price', image_url='$image_path', category='$category', stock='$stock' WHERE product_id='$product_id'";
+                    $conn->query($sql);
+                }
             } else {
                 $errors[] = "Failed to move uploaded file.";
             }
+        } else {
+            $errors = array_merge($errors, $image_errors);
         }
     } else {
-        $sql = "UPDATE products SET name='$name', description='$description', price='$price', category='$category', stock='$stock' WHERE product_id='$product_id'";
+        if (empty($errors)) {
+            $sql = "UPDATE products SET name='$name', description='$description', price='$price', category='$category', stock='$stock' WHERE product_id='$product_id'";
+            $conn->query($sql);
+        }
     }
-    $conn->query($sql);
 }
 
 // Fetch products
